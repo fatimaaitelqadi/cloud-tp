@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Ajouter un livre</h5>
+            </div>
+            <div class="card-body">
+                <form action="/livres" method="POST">
+                    <div class="mb-3">
+                        <label for="titre" class="form-label">Titre</label>
+                        <input type="text" class="form-control" id="titre" name="titre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="auteur" class="form-label">Auteur</label>
+                        <input type="text" class="form-control" id="auteur" name="auteur" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="isbn" class="form-label">ISBN</label>
+                        <input type="text" class="form-control" id="isbn" name="isbn" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantite" class="form-label">Quantité</label>
+                        <input type="number" class="form-control" id="quantite" name="quantite" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Liste des livres</h5>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ISBN</th>
+                            <th>Titre</th>
+                            <th>Auteur</th>
+                            <th>Quantité</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% livres.forEach(function(livre) { %>
+                            <tr>
+                                <td><%= livre.isbn %></td>
+                                <td><%= livre.titre %></td>
+                                <td><%= livre.auteur %></td>
+                                <td><%= livre.quantite %></td>
+                                <td>
+                                    <a href="/livres/<%= livre._id %>/edit" class="btn btn-sm btn-warning">Modifier</a>
+                                    <form action="/livres/<%= livre._id %>?_method=DELETE" method="POST" style="display: inline;">
+                                        <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div> 

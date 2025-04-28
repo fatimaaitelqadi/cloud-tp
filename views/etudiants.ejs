@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Ajouter un étudiant</h5>
+            </div>
+            <div class="card-body">
+                <form action="/etudiants" method="POST">
+                    <div class="mb-3">
+                        <label for="nom" class="form-label">Nom</label>
+                        <input type="text" class="form-control" id="nom" name="nom" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="prenom" class="form-label">Prénom</label>
+                        <input type="text" class="form-control" id="prenom" name="prenom" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="matricule" class="form-label">Matricule</label>
+                        <input type="text" class="form-control" id="matricule" name="matricule" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Liste des étudiants</h5>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Matricule</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% etudiants.forEach(function(etudiant) { %>
+                            <tr>
+                                <td><%= etudiant.matricule %></td>
+                                <td><%= etudiant.nom %></td>
+                                <td><%= etudiant.prenom %></td>
+                                <td><%= etudiant.email %></td>
+                                <td>
+                                    <a href="/etudiants/<%= etudiant._id %>/edit" class="btn btn-sm btn-warning">Modifier</a>
+                                    <form action="/etudiants/<%= etudiant._id %>?_method=DELETE" method="POST" style="display: inline;">
+                                        <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div> 

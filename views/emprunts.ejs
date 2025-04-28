@@ -1,0 +1,85 @@
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Nouvel emprunt</h5>
+            </div>
+            <div class="card-body">
+                <form action="/emprunts" method="POST">
+                    <div class="mb-3">
+                        <label for="etudiant" class="form-label">Étudiant</label>
+                        <select class="form-select" id="etudiant" name="etudiant" required>
+                            <option value="">Sélectionner un étudiant</option>
+                            <% etudiants.forEach(function(etudiant) { %>
+                                <option value="<%= etudiant._id %>"><%= etudiant.nom %> <%= etudiant.prenom %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="livre" class="form-label">Livre</label>
+                        <select class="form-select" id="livre" name="livre" required>
+                            <option value="">Sélectionner un livre</option>
+                            <% livres.forEach(function(livre) { %>
+                                <option value="<%= livre._id %>"><%= livre.titre %> - <%= livre.auteur %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dateEmprunt" class="form-label">Date d'emprunt</label>
+                        <input type="date" class="form-control" id="dateEmprunt" name="dateEmprunt" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dateRetour" class="form-label">Date de retour prévue</label>
+                        <input type="date" class="form-control" id="dateRetour" name="dateRetour" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enregistrer l'emprunt</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Liste des emprunts</h5>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Étudiant</th>
+                            <th>Livre</th>
+                            <th>Date d'emprunt</th>
+                            <th>Date de retour</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% emprunts.forEach(function(emprunt) { %>
+                            <tr>
+                                <td><%= emprunt.etudiant.nom %> <%= emprunt.etudiant.prenom %></td>
+                                <td><%= emprunt.livre.titre %></td>
+                                <td><%= new Date(emprunt.dateEmprunt).toLocaleDateString() %></td>
+                                <td><%= new Date(emprunt.dateRetour).toLocaleDateString() %></td>
+                                <td>
+                                    <% if (emprunt.retourne) { %>
+                                        <span class="badge bg-success">Retourné</span>
+                                    <% } else { %>
+                                        <span class="badge bg-warning">En cours</span>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (!emprunt.retourne) { %>
+                                        <form action="/emprunts/<%= emprunt._id %>/retour" method="POST" style="display: inline;">
+                                            <button type="submit" class="btn btn-sm btn-success">Marquer comme retourné</button>
+                                        </form>
+                                    <% } %>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div> 
